@@ -5,9 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PictureWorksModel extends Model
+class UserComments extends Model
 {
     use HasFactory;
-    
-    
+
+    protected $table="userscomments";
+
+    protected $fillable =[
+        'name',
+        'comments',
+    ];
+
 }
