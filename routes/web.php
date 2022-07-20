@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PictureWorksController;
+use App\Http\Controllers\UserCommentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +20,6 @@ Route::get('/', function () {
 });
 
 
+Route::get('/id/{X}', [UserCommentsController::class, 'getIDx']);
+Route::get('/test', [PictureWorksController::class, 'getTest']);
 
