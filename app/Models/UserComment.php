@@ -68,7 +68,7 @@ class UserComment extends Model
     }
     
     public static function append_user_comments($id, $comments){
-        global $mydb;
+        /*global $mydb;
     
         $result = mysqli_query($mydb, 'SELECT usercomments FROM users WHERE id = "'.mysqli_real_escape_string($mydb, $id).'"');
        
@@ -82,7 +82,22 @@ class UserComment extends Model
         $row->comments .= "\n".$comments;
     
         mysqli_query($mydb, 'UPDATE usercomments SET comments = "'.mysqli_real_escape_string($mydb, $row->comments).'"');
-        return mysqli_error($mydb);
+        return mysqli_error($mydb); */
+        
+        //it will do the same logic of the above commented code
+        try{
+            $rs = UserComment::find($id);
+            if($rs != null){
+                $rs->comments = $comments;
+                $rs->save();
+            }
+    
+        }catch(Exception $e)
+        {
+            FacadesLog::error($e);
+        }
+
+        
     }
     
     public static function contains($haystack, $needle, $case_sensitive = true){
