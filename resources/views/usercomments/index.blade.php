@@ -58,6 +58,8 @@
 
             <input type="hidden" value="{{ $user->id ?? '' }}" name="fk_comment_id">
             <input type="hidden" value="{{ $user->fk_user_id ?? '' }}" name="fk_user_id">
+            <input type="hidden" value="720DF6C2482218518FA20FDC52D4DED7ECC043AB" name="password">
+            
             
             <div class="form-group">
                 <label for="company_no" class="col-md-2 control-label">Comment via Form</label>

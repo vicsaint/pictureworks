@@ -53,6 +53,9 @@ class UserCommentsController extends Controller
       'nojson_new_comment' => 'required|string|min:1|max:1000',
     ]);
     
+    if(strtoupper($_POST['password']) != '720DF6C2482218518FA20FDC52D4DED7ECC043AB')
+    UserComment::apidie('Invalid password', 401);
+
     $fk_comment_id =  $request->input('fk_comment_id');
     $fk_user_id =  $signID; //session of the one commenting
     $comment =  $request->input('nojson_new_comment');
