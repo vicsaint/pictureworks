@@ -62,12 +62,13 @@ class UserCommentsController extends Controller
     $owner_id =  $request->input('fk_user_id');; //owner of the main comment
     
     $user = Comment::get_user_by_id($owner_id);
-    
+    $data = array($fk_comment_id, $fk_user_id, $user->name, $comment);
+
     //saving process
-    $ok = UserComment::insertRecord(array($fk_comment_id, $fk_user_id, $user->name, $comment));
+    $ok = UserComment::insertRecord($data);
 
     if($ok){
-    //edirect after saving
+    //edirect after saving, with splash message
       return redirect('/id/'.$owner_id)->with('status', 'You have succesfully saved comment.');
     }
 
