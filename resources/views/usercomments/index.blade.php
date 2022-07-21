@@ -37,14 +37,27 @@
             <span class="avatar"><img src="images/users/<?=$user->id?>.jpg" alt="" /></span>
             <h1><?=$user->name?></h1>
             <p><?=nl2br($user->comments)?></p>
+                <div style="margin-left: 20px;">
+                    <!-- displaying other comments -->    
+
+@foreach ($rs_comments as $key => $value) 
+<p>
+ Comment: {{ $value->comments }} <br />
+ ID: <b> {{ $value->fk_user_id }} </b> <br />
+ Password: 720DF6C2482218518FA20FDC52D4DED7ECC043AB
+ 
+</p>
+<hr /> <br /> 
+@endforeach 
+
+                </div>
         </header>
 
         <form class="form-horizontal" role="form" action="{{ route('comment_form_nojsn') }}" method="POST">
             {{ csrf_field() }}
 
-            <input type="hidden" value="{{ $user->id ?? '' }}" name="comment_key_id">
-            <input type="hidden" value="{{ $user->fk_user->id ?? '' }}" name="fkey_user_id">
-            <input type="hidden" value="{{ $fk_comment->id ?? '' }}" name="fkey_comment_id">
+            <input type="hidden" value="{{ $user->id ?? '' }}" name="fk_comment_id">
+            <input type="hidden" value="{{ $user->fk_user_id ?? '' }}" name="fk_user_id">
             
             <div class="form-group">
                 <label for="company_no" class="col-md-2 control-label">Comment via Form</label>

@@ -22,18 +22,19 @@ class UserCommentsController extends Controller
   public function getIDx(Request $request)
   {
     //validation
-    $signID = Auth::id();
+    $signID = Auth::id(); //session of the login person
 
     $id = isset($request['X'])? $request['X'] : false;
    
     if($id)
     {
-      //rs recordset
         $user = Comment::get_user_by_id($id);
         if($user == null){
           die('This URI requires valid ID, please try again');
         } else{
-          return view('usercomments.index', compact('user'));
+          
+          $rs_comments = UserComment::where('fk_comment_id', $user->id)->get();
+          return view('usercomments.index', compact('user', 'rs_comments'));
         }
 
     }
@@ -43,7 +44,7 @@ class UserCommentsController extends Controller
 
   public function postNoneJsnForm(Request $request)
   {
-   // var_dump($_POST);
+    //var_dump($_POST); exit;
    
     //validation
     $signID = Auth::id(); //user login id
@@ -52,23 +53,20 @@ class UserCommentsController extends Controller
       'nojson_new_comment' => 'required|string|min:1|max:1000',
     ]);
     
-    
-    $fk_comment_id =  $request->input('comment_key_id');
+    $fk_comment_id =  $request->input('fk_comment_id');
+    $fk_user_id =  $signID; //session of the one commenting
     $comment =  $request->input('nojson_new_comment');
+    $owner_id =  $request->input('fk_user_id');; //owner of the main comment
     
-    $ok = UserComment::create([
-      'fk_user_id'         => $signID,
-      'fk_comment_id'      => $fk_comment_id,
-      'comments'           => $comment,
-      'created_at'         => date('Y-m-d H:i:s'),
-    ]);
+    $user = Comment::get_user_by_id($owner_id);
     
-    if($ok){
-     
-      $user = UserComment::get_user_by_id($id);
-      return view('usercomments.index', compact('user'));
-    }
+    //saving process
+    $ok = UserComment::insertRecord(array($fk_comment_id, $fk_user_id, $user->name, $comment));
 
+    if($ok){
+    //edirect after saving
+      return redirect('/id/'.$owner_id)->with('status', 'You have succesfully saved comment.');
+    }
 
   }
   

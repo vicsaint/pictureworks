@@ -112,4 +112,16 @@ class UserComment extends Model
         return UserComment::find($id);
     }
 
+
+    public static function insertRecord($d){
+        $ok = UserComment::create([
+            'fk_user_id'         => $d[1],
+            'fk_comment_id'      => $d[0],
+            'name'               => $d[2],
+            'comments'           => $d[3],
+            'created_at'         => date('Y-m-d H:i:s'),
+            'updated_at'         => date('Y-m-d H:i:s'),
+          ]);
+        return $ok;  
+    }
 }
