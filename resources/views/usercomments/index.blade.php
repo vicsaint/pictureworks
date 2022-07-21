@@ -10,6 +10,29 @@
 <body class="is-preload">
 <div id="wrapper">
     <section id="main">
+
+@if (session('status'))
+<div class="alert alert-success">
+  {{ session('status') }}
+</div>
+@endif
+@if (session('message'))
+<div class="alert alert-danger">
+    {{ session('message') }}
+</div>
+@endif
+
+@if ($errors->any())
+  <div class="alert alert-danger">
+     <ul>
+        @foreach ($errors->all() as $error)
+           <li>{{ $error }}</li>
+        @endforeach
+     </ul>
+
+  </div>
+@endif
+
         <header>
             <span class="avatar"><img src="images/users/<?=$user->id?>.jpg" alt="" /></span>
             <h1><?=$user->name?></h1>
@@ -19,37 +42,20 @@
         <form class="form-horizontal" role="form" action="{{ route('comment_form_nojsn') }}" method="POST">
             {{ csrf_field() }}
 
+            <input type="hidden" value="{{ $user->id ?? '' }}" name="comment_key_id">
+            <input type="hidden" value="{{ $user->fk_user->id ?? '' }}" name="fkey_user_id">
+            <input type="hidden" value="{{ $fk_comment->id ?? '' }}" name="fkey_comment_id">
+            
             <div class="form-group">
                 <label for="company_no" class="col-md-2 control-label">Comment via Form</label>
                 <div class="col-md-4">
                     <textarea class="form-control" name="nojson_new_comment" id="new_comments" placeholder="Add Comments"></textarea> 
-                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-1 col-md-10">
                     <button type="submit" class="btn blue">Save</button>
-                </div>
             </div>
-
-        </form>
-<br /><br /><br />
-        <form class="form-horizontal" role="form" action="{{ route('comment_form_withjsn') }}" method="POST" enctype="application/json">
-            {{ csrf_field() }}
-
-            <div class="form-group">
-                <label for="company_no" class="col-md-2 control-label">Comment via Json</label>
-                <div class="col-md-4">
-                    <textarea class="form-control" name="json_new_comment" id="new_comments" placeholder="Add Comments"></textarea> 
-                </div>
-            </div>
-
-            <div class="form-group">
-                                            <div class="col-md-offset-1 col-md-10">
-                                                <button type="submit" class="btn blue">Save</button>
-                                            </div>
-                                        </div>
-            
         </form>
 
 

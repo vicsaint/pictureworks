@@ -9,13 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use Exception;
 
 
-class UserComments extends Model
+class UserComment extends Model
 {
     use HasFactory;
 
     protected $table="userscomments";
 
     protected $fillable =[
+        'fk_user_id',
+        'fk_comment_id',
         'name',
         'comments',
     ];
@@ -106,7 +108,8 @@ class UserComments extends Model
         return mysqli_fetch_object($result); */
        
         //Laravel ORM online line  
-        return UserComments::find($id);
+        //this will retrieve all the comment done by a user
+        return UserComment::find($id);
     }
 
 }
