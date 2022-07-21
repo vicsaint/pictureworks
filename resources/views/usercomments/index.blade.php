@@ -15,7 +15,45 @@
             <h1><?=$user->name?></h1>
             <p><?=nl2br($user->comments)?></p>
         </header>
-    </section>
+
+        <form class="form-horizontal" role="form" action="{{ route('comment_form_nojsn') }}" method="POST">
+            {{ csrf_field() }}
+
+            <div class="form-group">
+                <label for="company_no" class="col-md-2 control-label">Comment via Form</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" name="nojson_new_comment" id="new_comments" placeholder="Add Comments"></textarea> 
+                    </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-10">
+                    <button type="submit" class="btn blue">Save</button>
+                </div>
+            </div>
+
+        </form>
+<br /><br /><br />
+        <form class="form-horizontal" role="form" action="{{ route('comment_form_withjsn') }}" method="POST" enctype="application/json">
+            {{ csrf_field() }}
+
+            <div class="form-group">
+                <label for="company_no" class="col-md-2 control-label">Comment via Json</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" name="json_new_comment" id="new_comments" placeholder="Add Comments"></textarea> 
+                </div>
+            </div>
+
+            <div class="form-group">
+                                            <div class="col-md-offset-1 col-md-10">
+                                                <button type="submit" class="btn blue">Save</button>
+                                            </div>
+                                        </div>
+            
+        </form>
+
+
+        </section>
     <footer id="footer">
         <ul class="copyright">
             <li>&copy; Pictureworks</li>
